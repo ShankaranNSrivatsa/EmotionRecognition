@@ -58,7 +58,7 @@ model.add(Dense(7,activation='softmax'))
 
 model.compile(optimizer='adam',loss='categorical_crossentropy',metrics=['accuracy'])
 
-history = model.fit(training_data,epochs=25,validation_data=validation_data,callbacks=[early_stopping])
+history = model.fit(training_data,epochs=60,validation_data=validation_data,callbacks=[early_stopping])
 
 model.save('Emotional_detection.h5')
 
