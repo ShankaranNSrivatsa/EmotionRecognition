@@ -4,6 +4,9 @@ from keras import Input
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from keras.layers import Conv2D, MaxPooling2D, Dropout, Flatten, Dense, BatchNormalization
 from keras.callbacks import EarlyStopping
+from sklearn.utils.class_weight import compute_class_weight
+import numpy as np
+
 
 early_stopping = EarlyStopping(monitor='val_loss', patience=5, restore_best_weights=True)
 
@@ -57,8 +60,18 @@ model.add(Dropout(0.5))
 model.add(Dense(7,activation='softmax'))
 
 model.compile(optimizer='adam',loss='categorical_crossentropy',metrics=['accuracy'])
+class_indices = training_data.class_indices 
+class_labels = list(class_indices.keys())
 
-history = model.fit(training_data,epochs=60,validation_data=validation_data,callbacks=[early_stopping])
+labels = training_data.classes 
+
+class_weights = compute_class_weight(class_weight='balanced',
+                                     classes=np.unique(labels),
+                                     y=labels)
+
+class_weights_dict = dict(enumerate(class_weights))
+
+history = model.fit(training_data,epochs=60,validation_data=validation_data,callbacks=[early_stopping],class_weight= class_weights_dict)
 
 model.save('Emotional_detection.h5')
 
