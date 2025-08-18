@@ -1,4 +1,4 @@
-# 😃 Emotion Detection with CNN  
+# Emotion Detection with CNN  
 
 This project uses a **Convolutional Neural Network (CNN)** to detect facial emotions in real-time from a webcam feed.  
 The model is trained on images of faces categorized into seven emotions:  
